@@ -185,11 +185,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\..\include;$(OutDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)lib;$(ProjectDir)..\..\lib;$(ProjectDir)..\..\charset;$(ProjectDir)..\..;$(OutDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ProgramDataBaseFileName>$(OutDir)..\..\lib\$(PlatformTarget)\$(TargetName).pdb</ProgramDataBaseFileName>
-      <PreprocessorDefinitions>_WINDOWS;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;BUILDING_FRIBIDI;_WINDOWS;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BrowseInformationFile>$(IntDir)bsc\</BrowseInformationFile>
       <BrowseInformation>true</BrowseInformation>
+      <ExceptionHandling>false</ExceptionHandling>
+      <DisableSpecificWarnings>4005;4996;4018;4028;4273</DisableSpecificWarnings>
     </ClCompile>
     <Lib>
       <TargetMachine>MachineX86</TargetMachine>
@@ -201,6 +203,44 @@
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
     </Bscmake>
+    <PreBuildEvent>
+      <Command>IF EXIST "$(ProjectDir)..\..\config.h" (
+  DEL "$(ProjectDir)..\..\config.h"
+)
+IF EXIST "$(ProjectDir)..\..\lib\fribidi-config.h" (
+  DEL "$(ProjectDir)..\..\lib\fribidi-config.h"
+)
+IF EXIST "$(ProjectDir)..\..\lib\fribidi-unicode-version.h" (
+  DEL "$(ProjectDir)..\..\lib\fribidi-unicode-version.h"
+)
+IF EXIST "$(ProjectDir)..\..\lib\mirroring.tab.i" (
+  DEL "$(ProjectDir)..\..\lib\mirroring.tab.i"
+)
+IF EXIST "$(ProjectDir)..\..\lib\joining-type.tab.i" (
+  DEL "$(ProjectDir)..\..\lib\joining-type.tab.i"
+)
+IF EXIST "$(ProjectDir)..\..\lib\bidi-type.tab.i" (
+  DEL "$(ProjectDir)..\..\lib\bidi-type.tab.i"
+)
+IF EXIST "$(ProjectDir)..\..\lib\arabic-shaping.tab.i" (
+  DEL "$(ProjectDir)..\..\lib\arabic-shaping.tab.i"
+)
+IF EXIST "$(OutDir).\..\include\$(ProjectName)" (
+  RD /s /q "$(OutDir).\..\include\$(ProjectName)"
+)
+      </Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>MKDIR "$(OutDir)..\..\include"
+MKDIR "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)..\..\lib\fribidi*.h" "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)..\..\charset\fribidi-char-sets.h" "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)..\..\charset\fribidi-char-sets-list.h" "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)lib\fribidi-config.h" "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)lib\fribidi-unicode-version.h" "$(OutDir)..\..\include\$(ProjectName)"
+MKDIR "$(OutDir)..\..\licenses"
+copy "$(ProjectDir)..\..\COPYING" "$(OutDir)..\..\licenses\$(ProjectName).txt"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -208,11 +248,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <PreprocessorDefinitions>_WINDOWS;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\..\include;$(OutDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;BUILDING_FRIBIDI;_WINDOWS;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)lib;$(ProjectDir)..\..\lib;$(ProjectDir)..\..\charset;$(ProjectDir)..\..;$(OutDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ProgramDataBaseFileName>$(OutDir)..\..\lib\$(PlatformTarget)\$(TargetName).pdb</ProgramDataBaseFileName>
       <BrowseInformationFile>$(IntDir)bsc\</BrowseInformationFile>
       <BrowseInformation>true</BrowseInformation>
+      <ExceptionHandling>false</ExceptionHandling>
+      <DisableSpecificWarnings>4005;4996;4018;4028;4273</DisableSpecificWarnings>
     </ClCompile>
     <Lib>
       <SubSystem>Windows</SubSystem>
@@ -223,6 +265,44 @@
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
     </Bscmake>
+    <PreBuildEvent>
+      <Command>IF EXIST "$(ProjectDir)..\..\config.h" (
+  DEL "$(ProjectDir)..\..\config.h"
+)
+IF EXIST "$(ProjectDir)..\..\lib\fribidi-config.h" (
+  DEL "$(ProjectDir)..\..\lib\fribidi-config.h"
+)
+IF EXIST "$(ProjectDir)..\..\lib\fribidi-unicode-version.h" (
+  DEL "$(ProjectDir)..\..\lib\fribidi-unicode-version.h"
+)
+IF EXIST "$(ProjectDir)..\..\lib\mirroring.tab.i" (
+  DEL "$(ProjectDir)..\..\lib\mirroring.tab.i"
+)
+IF EXIST "$(ProjectDir)..\..\lib\joining-type.tab.i" (
+  DEL "$(ProjectDir)..\..\lib\joining-type.tab.i"
+)
+IF EXIST "$(ProjectDir)..\..\lib\bidi-type.tab.i" (
+  DEL "$(ProjectDir)..\..\lib\bidi-type.tab.i"
+)
+IF EXIST "$(ProjectDir)..\..\lib\arabic-shaping.tab.i" (
+  DEL "$(ProjectDir)..\..\lib\arabic-shaping.tab.i"
+)
+IF EXIST "$(OutDir).\..\include\$(ProjectName)" (
+  RD /s /q "$(OutDir).\..\include\$(ProjectName)"
+)
+      </Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>MKDIR "$(OutDir)..\..\include"
+MKDIR "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)..\..\lib\fribidi*.h" "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)..\..\charset\fribidi-char-sets.h" "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)..\..\charset\fribidi-char-sets-list.h" "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)lib\fribidi-config.h" "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)lib\fribidi-unicode-version.h" "$(OutDir)..\..\include\$(ProjectName)"
+MKDIR "$(OutDir)..\..\licenses"
+copy "$(ProjectDir)..\..\COPYING" "$(OutDir)..\..\licenses\$(ProjectName).txt"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -232,11 +312,13 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\..\include;$(OutDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)lib;$(ProjectDir)..\..\lib;$(ProjectDir)..\..\charset;$(ProjectDir)..\..;$(OutDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ProgramDataBaseFileName>$(OutDir)..\..\lib\$(PlatformTarget)\$(TargetName).pdb</ProgramDataBaseFileName>
-      <PreprocessorDefinitions>_WINDOWS;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;BUILDING_FRIBIDI;_WINDOWS;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BrowseInformationFile>$(IntDir)bsc\</BrowseInformationFile>
       <BrowseInformation>true</BrowseInformation>
+      <ExceptionHandling>false</ExceptionHandling>
+      <DisableSpecificWarnings>4005;4996;4018;4028;4273</DisableSpecificWarnings>
     </ClCompile>
     <Lib>
       <TargetMachine>MachineX86</TargetMachine>
@@ -248,6 +330,44 @@
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
     </Bscmake>
+    <PreBuildEvent>
+      <Command>IF EXIST "$(ProjectDir)..\..\config.h" (
+  DEL "$(ProjectDir)..\..\config.h"
+)
+IF EXIST "$(ProjectDir)..\..\lib\fribidi-config.h" (
+  DEL "$(ProjectDir)..\..\lib\fribidi-config.h"
+)
+IF EXIST "$(ProjectDir)..\..\lib\fribidi-unicode-version.h" (
+  DEL "$(ProjectDir)..\..\lib\fribidi-unicode-version.h"
+)
+IF EXIST "$(ProjectDir)..\..\lib\mirroring.tab.i" (
+  DEL "$(ProjectDir)..\..\lib\mirroring.tab.i"
+)
+IF EXIST "$(ProjectDir)..\..\lib\joining-type.tab.i" (
+  DEL "$(ProjectDir)..\..\lib\joining-type.tab.i"
+)
+IF EXIST "$(ProjectDir)..\..\lib\bidi-type.tab.i" (
+  DEL "$(ProjectDir)..\..\lib\bidi-type.tab.i"
+)
+IF EXIST "$(ProjectDir)..\..\lib\arabic-shaping.tab.i" (
+  DEL "$(ProjectDir)..\..\lib\arabic-shaping.tab.i"
+)
+IF EXIST "$(OutDir).\..\include\$(ProjectName)" (
+  RD /s /q "$(OutDir).\..\include\$(ProjectName)"
+)
+      </Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>MKDIR "$(OutDir)..\..\include"
+MKDIR "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)..\..\lib\fribidi*.h" "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)..\..\charset\fribidi-char-sets.h" "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)..\..\charset\fribidi-char-sets-list.h" "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)lib\fribidi-config.h" "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)lib\fribidi-unicode-version.h" "$(OutDir)..\..\include\$(ProjectName)"
+MKDIR "$(OutDir)..\..\licenses"
+copy "$(ProjectDir)..\..\COPYING" "$(OutDir)..\..\licenses\$(ProjectName).txt"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -257,11 +377,13 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\..\include;$(OutDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)lib;$(ProjectDir)..\..\lib;$(ProjectDir)..\..\charset;$(ProjectDir)..\..;$(OutDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ProgramDataBaseFileName>$(OutDir)..\..\lib\$(PlatformTarget)\$(TargetName).pdb</ProgramDataBaseFileName>
-      <PreprocessorDefinitions>_WINDOWS;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;BUILDING_FRIBIDI;_WINDOWS;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BrowseInformationFile>$(IntDir)bsc\</BrowseInformationFile>
       <BrowseInformation>true</BrowseInformation>
+      <ExceptionHandling>false</ExceptionHandling>
+      <DisableSpecificWarnings>4005;4996;4018;4028;4273</DisableSpecificWarnings>
     </ClCompile>
     <Lib>
       <SubSystem>Windows</SubSystem>
@@ -272,6 +394,44 @@
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
     </Bscmake>
+    <PreBuildEvent>
+      <Command>IF EXIST "$(ProjectDir)..\..\config.h" (
+  DEL "$(ProjectDir)..\..\config.h"
+)
+IF EXIST "$(ProjectDir)..\..\lib\fribidi-config.h" (
+  DEL "$(ProjectDir)..\..\lib\fribidi-config.h"
+)
+IF EXIST "$(ProjectDir)..\..\lib\fribidi-unicode-version.h" (
+  DEL "$(ProjectDir)..\..\lib\fribidi-unicode-version.h"
+)
+IF EXIST "$(ProjectDir)..\..\lib\mirroring.tab.i" (
+  DEL "$(ProjectDir)..\..\lib\mirroring.tab.i"
+)
+IF EXIST "$(ProjectDir)..\..\lib\joining-type.tab.i" (
+  DEL "$(ProjectDir)..\..\lib\joining-type.tab.i"
+)
+IF EXIST "$(ProjectDir)..\..\lib\bidi-type.tab.i" (
+  DEL "$(ProjectDir)..\..\lib\bidi-type.tab.i"
+)
+IF EXIST "$(ProjectDir)..\..\lib\arabic-shaping.tab.i" (
+  DEL "$(ProjectDir)..\..\lib\arabic-shaping.tab.i"
+)
+IF EXIST "$(OutDir).\..\include\$(ProjectName)" (
+  RD /s /q "$(OutDir).\..\include\$(ProjectName)"
+)
+      </Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>MKDIR "$(OutDir)..\..\include"
+MKDIR "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)..\..\lib\fribidi*.h" "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)..\..\charset\fribidi-char-sets.h" "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)..\..\charset\fribidi-char-sets-list.h" "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)lib\fribidi-config.h" "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)lib\fribidi-unicode-version.h" "$(OutDir)..\..\include\$(ProjectName)"
+MKDIR "$(OutDir)..\..\licenses"
+copy "$(ProjectDir)..\..\COPYING" "$(OutDir)..\..\licenses\$(ProjectName).txt"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|Win32'">
     <ClCompile>
@@ -279,11 +439,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\..\include;$(OutDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)lib;$(ProjectDir)..\..\lib;$(ProjectDir)..\..\charset;$(ProjectDir)..\..;$(OutDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ProgramDataBaseFileName>$(IntDir)$(TargetName).pdb</ProgramDataBaseFileName>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;WIN32;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;BUILDING_FRIBIDI;_DEBUG;_WINDOWS;_USRDLL;WIN32;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BrowseInformationFile>$(IntDir)bsc\</BrowseInformationFile>
       <BrowseInformation>true</BrowseInformation>
+      <ExceptionHandling>false</ExceptionHandling>
+      <DisableSpecificWarnings>4005;4996;4018;4028;4273</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -295,10 +457,49 @@
       <AdditionalLibraryDirectories>$(OutDir)..\..\lib\$(PlatformTarget)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <LargeAddressAware>true</LargeAddressAware>
+      <ModuleDefinitionFile>libfribidi.def</ModuleDefinitionFile>
     </Link>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
     </Bscmake>
+    <PreBuildEvent>
+      <Command>IF EXIST "$(ProjectDir)..\..\config.h" (
+  DEL "$(ProjectDir)..\..\config.h"
+)
+IF EXIST "$(ProjectDir)..\..\lib\fribidi-config.h" (
+  DEL "$(ProjectDir)..\..\lib\fribidi-config.h"
+)
+IF EXIST "$(ProjectDir)..\..\lib\fribidi-unicode-version.h" (
+  DEL "$(ProjectDir)..\..\lib\fribidi-unicode-version.h"
+)
+IF EXIST "$(ProjectDir)..\..\lib\mirroring.tab.i" (
+  DEL "$(ProjectDir)..\..\lib\mirroring.tab.i"
+)
+IF EXIST "$(ProjectDir)..\..\lib\joining-type.tab.i" (
+  DEL "$(ProjectDir)..\..\lib\joining-type.tab.i"
+)
+IF EXIST "$(ProjectDir)..\..\lib\bidi-type.tab.i" (
+  DEL "$(ProjectDir)..\..\lib\bidi-type.tab.i"
+)
+IF EXIST "$(ProjectDir)..\..\lib\arabic-shaping.tab.i" (
+  DEL "$(ProjectDir)..\..\lib\arabic-shaping.tab.i"
+)
+IF EXIST "$(OutDir).\..\include\$(ProjectName)" (
+  RD /s /q "$(OutDir).\..\include\$(ProjectName)"
+)
+      </Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>MKDIR "$(OutDir)..\..\include"
+MKDIR "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)..\..\lib\fribidi*.h" "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)..\..\charset\fribidi-char-sets.h" "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)..\..\charset\fribidi-char-sets-list.h" "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)lib\fribidi-config.h" "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)lib\fribidi-unicode-version.h" "$(OutDir)..\..\include\$(ProjectName)"
+MKDIR "$(OutDir)..\..\licenses"
+copy "$(ProjectDir)..\..\COPYING" "$(OutDir)..\..\licenses\$(ProjectName).txt"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugDLL|x64'">
     <ClCompile>
@@ -306,11 +507,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\..\include;$(OutDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)lib;$(ProjectDir)..\..\lib;$(ProjectDir)..\..\charset;$(ProjectDir)..\..;$(OutDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ProgramDataBaseFileName>$(IntDir)$(TargetName).pdb</ProgramDataBaseFileName>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;WIN32;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;BUILDING_FRIBIDI;_DEBUG;_WINDOWS;_USRDLL;WIN32;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BrowseInformationFile>$(IntDir)bsc\</BrowseInformationFile>
       <BrowseInformation>true</BrowseInformation>
+      <ExceptionHandling>false</ExceptionHandling>
+      <DisableSpecificWarnings>4005;4996;4018;4028;4273</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -321,10 +524,49 @@
       <ProgramDatabaseFile>$(OutDir)..\..\lib\$(PlatformTarget)\$(TargetName).pdb</ProgramDatabaseFile>
       <AdditionalLibraryDirectories>$(OutDir)..\..\lib\$(PlatformTarget)\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
+      <ModuleDefinitionFile>libfribidi.def</ModuleDefinitionFile>
     </Link>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
     </Bscmake>
+    <PreBuildEvent>
+      <Command>IF EXIST "$(ProjectDir)..\..\config.h" (
+  DEL "$(ProjectDir)..\..\config.h"
+)
+IF EXIST "$(ProjectDir)..\..\lib\fribidi-config.h" (
+  DEL "$(ProjectDir)..\..\lib\fribidi-config.h"
+)
+IF EXIST "$(ProjectDir)..\..\lib\fribidi-unicode-version.h" (
+  DEL "$(ProjectDir)..\..\lib\fribidi-unicode-version.h"
+)
+IF EXIST "$(ProjectDir)..\..\lib\mirroring.tab.i" (
+  DEL "$(ProjectDir)..\..\lib\mirroring.tab.i"
+)
+IF EXIST "$(ProjectDir)..\..\lib\joining-type.tab.i" (
+  DEL "$(ProjectDir)..\..\lib\joining-type.tab.i"
+)
+IF EXIST "$(ProjectDir)..\..\lib\bidi-type.tab.i" (
+  DEL "$(ProjectDir)..\..\lib\bidi-type.tab.i"
+)
+IF EXIST "$(ProjectDir)..\..\lib\arabic-shaping.tab.i" (
+  DEL "$(ProjectDir)..\..\lib\arabic-shaping.tab.i"
+)
+IF EXIST "$(OutDir).\..\include\$(ProjectName)" (
+  RD /s /q "$(OutDir).\..\include\$(ProjectName)"
+)
+      </Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>MKDIR "$(OutDir)..\..\include"
+MKDIR "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)..\..\lib\fribidi*.h" "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)..\..\charset\fribidi-char-sets.h" "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)..\..\charset\fribidi-char-sets-list.h" "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)lib\fribidi-config.h" "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)lib\fribidi-unicode-version.h" "$(OutDir)..\..\include\$(ProjectName)"
+MKDIR "$(OutDir)..\..\licenses"
+copy "$(ProjectDir)..\..\COPYING" "$(OutDir)..\..\licenses\$(ProjectName).txt"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|Win32'">
     <ClCompile>
@@ -334,11 +576,13 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\..\include;$(OutDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)lib;$(ProjectDir)..\..\lib;$(ProjectDir)..\..\charset;$(ProjectDir)..\..;$(OutDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ProgramDataBaseFileName>$(IntDir)$(TargetName).pdb</ProgramDataBaseFileName>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;BUILDING_FRIBIDI;WIN32;NDEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BrowseInformationFile>$(IntDir)bsc\</BrowseInformationFile>
       <BrowseInformation>true</BrowseInformation>
+      <ExceptionHandling>false</ExceptionHandling>
+      <DisableSpecificWarnings>4005;4996;4018;4028;4273</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -352,10 +596,49 @@
       <LargeAddressAware>true</LargeAddressAware>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>libfribidi.def</ModuleDefinitionFile>
     </Link>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
     </Bscmake>
+    <PreBuildEvent>
+      <Command>IF EXIST "$(ProjectDir)..\..\config.h" (
+  DEL "$(ProjectDir)..\..\config.h"
+)
+IF EXIST "$(ProjectDir)..\..\lib\fribidi-config.h" (
+  DEL "$(ProjectDir)..\..\lib\fribidi-config.h"
+)
+IF EXIST "$(ProjectDir)..\..\lib\fribidi-unicode-version.h" (
+  DEL "$(ProjectDir)..\..\lib\fribidi-unicode-version.h"
+)
+IF EXIST "$(ProjectDir)..\..\lib\mirroring.tab.i" (
+  DEL "$(ProjectDir)..\..\lib\mirroring.tab.i"
+)
+IF EXIST "$(ProjectDir)..\..\lib\joining-type.tab.i" (
+  DEL "$(ProjectDir)..\..\lib\joining-type.tab.i"
+)
+IF EXIST "$(ProjectDir)..\..\lib\bidi-type.tab.i" (
+  DEL "$(ProjectDir)..\..\lib\bidi-type.tab.i"
+)
+IF EXIST "$(ProjectDir)..\..\lib\arabic-shaping.tab.i" (
+  DEL "$(ProjectDir)..\..\lib\arabic-shaping.tab.i"
+)
+IF EXIST "$(OutDir).\..\include\$(ProjectName)" (
+  RD /s /q "$(OutDir).\..\include\$(ProjectName)"
+)
+      </Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>MKDIR "$(OutDir)..\..\include"
+MKDIR "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)..\..\lib\fribidi*.h" "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)..\..\charset\fribidi-char-sets.h" "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)..\..\charset\fribidi-char-sets-list.h" "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)lib\fribidi-config.h" "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)lib\fribidi-unicode-version.h" "$(OutDir)..\..\include\$(ProjectName)"
+MKDIR "$(OutDir)..\..\licenses"
+copy "$(ProjectDir)..\..\COPYING" "$(OutDir)..\..\licenses\$(ProjectName).txt"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseDLL|x64'">
     <ClCompile>
@@ -365,11 +648,13 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)..\..\include;$(OutDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)lib;$(ProjectDir)..\..\lib;$(ProjectDir)..\..\charset;$(ProjectDir)..\..;$(OutDir)..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ProgramDataBaseFileName>$(IntDir)$(TargetName).pdb</ProgramDataBaseFileName>
-      <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>HAVE_CONFIG_H;BUILDING_FRIBIDI;NDEBUG;_WINDOWS;_USRDLL;WIN32;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BrowseInformationFile>$(IntDir)bsc\</BrowseInformationFile>
       <BrowseInformation>true</BrowseInformation>
+      <ExceptionHandling>false</ExceptionHandling>
+      <DisableSpecificWarnings>4005;4996;4018;4028;4273</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -382,11 +667,106 @@
       <AdditionalDependencies>%(AdditionalDependencies)</AdditionalDependencies>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>libfribidi.def</ModuleDefinitionFile>
     </Link>
     <Bscmake>
       <PreserveSbr>true</PreserveSbr>
     </Bscmake>
+    <PreBuildEvent>
+      <Command>IF EXIST "$(ProjectDir)..\..\config.h" (
+  DEL "$(ProjectDir)..\..\config.h"
+)
+IF EXIST "$(ProjectDir)..\..\lib\fribidi-config.h" (
+  DEL "$(ProjectDir)..\..\lib\fribidi-config.h"
+)
+IF EXIST "$(ProjectDir)..\..\lib\fribidi-unicode-version.h" (
+  DEL "$(ProjectDir)..\..\lib\fribidi-unicode-version.h"
+)
+IF EXIST "$(ProjectDir)..\..\lib\mirroring.tab.i" (
+  DEL "$(ProjectDir)..\..\lib\mirroring.tab.i"
+)
+IF EXIST "$(ProjectDir)..\..\lib\joining-type.tab.i" (
+  DEL "$(ProjectDir)..\..\lib\joining-type.tab.i"
+)
+IF EXIST "$(ProjectDir)..\..\lib\bidi-type.tab.i" (
+  DEL "$(ProjectDir)..\..\lib\bidi-type.tab.i"
+)
+IF EXIST "$(ProjectDir)..\..\lib\arabic-shaping.tab.i" (
+  DEL "$(ProjectDir)..\..\lib\arabic-shaping.tab.i"
+)
+IF EXIST "$(OutDir).\..\include\$(ProjectName)" (
+  RD /s /q "$(OutDir).\..\include\$(ProjectName)"
+)
+      </Command>
+    </PreBuildEvent>
+    <PostBuildEvent>
+      <Command>MKDIR "$(OutDir)..\..\include"
+MKDIR "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)..\..\lib\fribidi*.h" "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)..\..\charset\fribidi-char-sets.h" "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)..\..\charset\fribidi-char-sets-list.h" "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)lib\fribidi-config.h" "$(OutDir)..\..\include\$(ProjectName)"
+COPY "$(ProjectDir)lib\fribidi-unicode-version.h" "$(OutDir)..\..\include\$(ProjectName)"
+MKDIR "$(OutDir)..\..\licenses"
+copy "$(ProjectDir)..\..\COPYING" "$(OutDir)..\..\licenses\$(ProjectName).txt"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\charset\fribidi-char-sets-cap-rtl.c" />
+    <ClCompile Include="..\..\charset\fribidi-char-sets-cp1255.c" />
+    <ClCompile Include="..\..\charset\fribidi-char-sets-cp1256.c" />
+    <ClCompile Include="..\..\charset\fribidi-char-sets-iso8859-6.c" />
+    <ClCompile Include="..\..\charset\fribidi-char-sets-iso8859-8.c" />
+    <ClCompile Include="..\..\charset\fribidi-char-sets-utf8.c" />
+    <ClCompile Include="..\..\charset\fribidi-char-sets.c" />
+    <ClCompile Include="..\..\lib\fribidi-arabic.c" />
+    <ClCompile Include="..\..\lib\fribidi-bidi-types.c" />
+    <ClCompile Include="..\..\lib\fribidi-bidi.c" />
+    <ClCompile Include="..\..\lib\fribidi-deprecated.c" />
+    <ClCompile Include="..\..\lib\fribidi-joining-types.c" />
+    <ClCompile Include="..\..\lib\fribidi-joining.c" />
+    <ClCompile Include="..\..\lib\fribidi-mem.c" />
+    <ClCompile Include="..\..\lib\fribidi-mirroring.c" />
+    <ClCompile Include="..\..\lib\fribidi-run.c" />
+    <ClCompile Include="..\..\lib\fribidi-shape.c" />
+    <ClCompile Include="..\..\lib\fribidi.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="config.h" />
+    <ClInclude Include="lib\fribidi-config.h" />
+    <ClInclude Include="..\..\charset\fribidi-char-sets-cap-rtl.h" />
+    <ClInclude Include="..\..\charset\fribidi-char-sets-cp1255.h" />
+    <ClInclude Include="..\..\charset\fribidi-char-sets-cp1256.h" />
+    <ClInclude Include="..\..\charset\fribidi-char-sets-iso8859-6.h" />
+    <ClInclude Include="..\..\charset\fribidi-char-sets-iso8859-8.h" />
+    <ClInclude Include="..\..\charset\fribidi-char-sets-list.h" />
+    <ClInclude Include="..\..\charset\fribidi-char-sets-utf8.h" />
+    <ClInclude Include="..\..\charset\fribidi-char-sets.h" />
+    <ClInclude Include="..\..\lib\bidi-types.h" />
+    <ClInclude Include="..\..\lib\common.h" />
+    <ClInclude Include="..\..\lib\debug.h" />
+    <ClInclude Include="..\..\lib\fribidi-arabic.h" />
+    <ClInclude Include="..\..\lib\fribidi-begindecls.h" />
+    <ClInclude Include="..\..\lib\fribidi-bidi-types-list.h" />
+    <ClInclude Include="..\..\lib\fribidi-bidi-types.h" />
+    <ClInclude Include="..\..\lib\fribidi-bidi.h" />
+    <ClInclude Include="..\..\lib\fribidi-common.h" />
+    <ClInclude Include="..\..\lib\fribidi-deprecated.h" />
+    <ClInclude Include="..\..\lib\fribidi-enddecls.h" />
+    <ClInclude Include="..\..\lib\fribidi-flags.h" />
+    <ClInclude Include="..\..\lib\fribidi-joining-types-list.h" />
+    <ClInclude Include="..\..\lib\fribidi-joining-types.h" />
+    <ClInclude Include="..\..\lib\fribidi-joining.h" />
+    <ClInclude Include="..\..\lib\fribidi-mirroring.h" />
+    <ClInclude Include="..\..\lib\fribidi-shape.h" />
+    <ClInclude Include="..\..\lib\fribidi-types.h" />
+    <ClInclude Include="lib\fribidi-unicode-version.h" />
+    <ClInclude Include="..\..\lib\fribidi-unicode.h" />
+    <ClInclude Include="..\..\lib\fribidi.h" />
+    <ClInclude Include="..\..\lib\joining-types.h" />
+    <ClInclude Include="..\..\lib\mem.h" />
+    <ClInclude Include="..\..\lib\run.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
